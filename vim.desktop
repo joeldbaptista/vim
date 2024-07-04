@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+NoDisplay=true
+Name=vim
+Exec=st -n fterm -g 120x40 -e vim
+MimeType=text/plain
