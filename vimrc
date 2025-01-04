@@ -1,6 +1,6 @@
-" ----------------------------------------------
+" ---------------------------------------------------------------
 " SIMPLE VIM CONFIG
-" ----------------------------------------------
+" ---------------------------------------------------------------
 " Source: https://vimdoc.sourceforge.net/htmldoc/
 
 " ---------------------------------------------------------------
@@ -10,7 +10,6 @@ syntax on
 let mapleader=" "
 
 filetype plugin indent on
-colorscheme dracula
 
 set hlsearch
 set noswapfile
@@ -23,7 +22,7 @@ set paste
 set wildmenu
 set number
 set nowrap
-set relativenumber
+"set relativenumber
 set undofile
 "set cursorline
 "set cursorcolumn
@@ -38,18 +37,20 @@ set clipboard=unnamedplus
 " Make wildmenu behave like similar to Bash completion.
 set wildmode=list:longest
 
-set expandtab
+set softtabstop=4
 set tabstop=4
 set shiftwidth=4
-map <F2> :retab <CR> :wq! <CR>
+set expandtab
+
+map <F2> :retab <CR> :w <CR>
 
 "set backupdir=~/.vim/backup//
 "set directory=~/.vim/swap//
 "set undodir=~/.vim/undo//
 
-" ----------------------------------------------
+" ---------------------------------------------------------------
 " Status line
-" ----------------------------------------------
+" ---------------------------------------------------------------
 
 " Clear status line when vimrc is reloaded.
 set statusline=
@@ -61,30 +62,24 @@ set statusline+=%=
 set statusline+=\ %l\:\%c\ [\%p%%\]
 set laststatus=2
 
-"" ----------------------------------------------
-"" Plugins; make sure you use single quotes
-"" ----------------------------------------------
+" ---------------------------------------------------------------
+" Plugins; make sure you use single quotes
+" ---------------------------------------------------------------
 
-"call plug#begin('~/.vim/plugged')
-"
-"Plug 'lervag/wiki.vim'
-"Plug 'mhinz/vim-signify'
-"Plug 'tpope/vim-fugitive'
-"
-"" unmanaged plugin (manually installed and updated)
-"" plug '~/my-prototype-plugin'
-"call plug#end()
-"
+call plug#begin('~/.vim/plugged')
+Plug 'vimwiki/vimwiki'
+Plug 'preservim/nerdtree'
+call plug#end()
+
 "" **NOTE** after adding the above to the top of your Vim 
 "" configuration file, reload it (:source ~/.vimrc) or restart Vim. 
 "" Now run :PlugInstall to install the plugins.
 "" For more details, see: 
 "" https://github.com/junegunn/vim-plug/wiki/tutorial
 
-
-" ----------------------------------------------
+" ---------------------------------------------------------------
 " Shortcuts and remappings
-" ----------------------------------------------
+" ---------------------------------------------------------------
 
 " Toggle line and column highlighting
 nnoremap tt :set cursorcolumn!<Bar>set cursorline!<CR>
@@ -119,6 +114,11 @@ for i in range(1, 9)
 	execute 'nnoremap <space>' . i . ' :call Gototab(' . i . ')<CR>'
 endfor
 
+" Format json
+function! FormatJSON()
+    execute ':%!jq .'
+endfunction
+
 " Navigate the split view easier by pressing:
 " ctrl+j, ctrl+k, ctrl+h, or ctrl+l.
 nnoremap <c-j> <c-w>j
@@ -137,5 +137,18 @@ noremap <c-right> <c-w><
 " Change cursor in different modes
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-autocmd InsertEnter,InsertLeave * set cul!
+autocmd InsertEnter,InsertLeave * set nocul
+
+" Python file configuration
+au BufNewFile,BufRead *.py set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
+
+" Flagging extraneous whitespace; whitespaces will be red
+highlight BadWhitespace ctermbg=red guibg=red
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h,*.sh match BadWhitespace /\s\+$/
 

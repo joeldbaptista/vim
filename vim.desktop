@@ -1,7 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
+Name=Vim in st
+Comment=Edit text files in Vim using the st terminal emulator
+Exec=st -n fterm -g 120x30 -e vim %F
+Icon=vim
+Terminal=true
 Type=Application
-NoDisplay=true
-Name=vim
-Exec=st -n fterm -g 120x40 -e vim
-MimeType=text/plain
+Categories=Utility;TextEditor;
+MimeType=text/plain;

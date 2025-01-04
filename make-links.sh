@@ -1,5 +1,6 @@
-#!/bin/sh
-set -e
+#!/bin/bash
+set -eu
 
-ln -s $(pwd)/vimrc $HOME/.vimrc
-ln -s $(pwd)/vim $HOME/.vim
+sudo cp vim.desktop ~/.local/share/applications/
+sudo chmod 644 ~/.local/share/applications/vim.desktop
+update-desktop-database ~/.local/share/applications/
